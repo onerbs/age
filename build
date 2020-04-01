@@ -1,0 +1,3 @@
+npx sass age.sass > docs/age.css
+npx tsc --build
+npx standard --fix docs/age.js
