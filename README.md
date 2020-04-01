@@ -1,7 +1,8 @@
-# Age Display
+# age
 
-Simple display of [years passed since date](https://neauoire.github.io/age/#1986-03-22) in url, with 9 decimals.
+simple display of the time passed since a defined date
 
 ```
-https://neauoire.github.io/age/#1986-03-22
+https://onerbs.github.io/age/#1986-03-22
+#                    format: #YYYY-MM-DD
 ```
