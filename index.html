@@ -1,112 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Age</title>
-  <style>
-    :root {
-      font-size: 24px;
-    }
-    body {
-      align-items: center;
-      background: black;
-      box-sizing: border-box;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      font-family: Inter, sans-serif;
-      font-weight: 200;
-      height: 100vh;
-      justify-content: center;
-      line-height: 1.75;
-      overflow: hidden;
-      padding: 1rem;
-      user-select: none;
-      margin: 0;
-    }
-    #years{animation:fadeIn 1.5s ease 0ms both}
-    #months{animation:fadeIn 1.5s ease 100ms both}
-    #weeks{animation:fadeIn 1.5s ease 200ms both}
-    #days{animation:fadeIn 1.5s ease 300ms both}
-    #hours{animation:fadeIn 1.5s ease 400ms both}
-    #minutes{animation:fadeIn 1.5s ease 500ms both}
-    #seconds{animation:fadeIn 1.5s ease 600ms both}
-    #title,#information{
-      animation:fadeIn 1.5s ease 700ms both;
-      color:#454545;
-      font-size:0.75em;
-      font-weight:300;
-      margin-top:1.5em;
-    }
-    .mark::after{content:"*";font-weight:bold}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @media screen and (min-width:  360px){#container{font-size:1.2rem;line-height:1.58}}
-    @media screen and (min-width:  480px){#container{font-size:1.6rem;line-height:1.58;font-weight:300}}
-    @media screen and (min-width:  648px){#container{width:600px}}
-    @media screen and (min-width:  768px){#container{font-size:2rem;line-height:1.46;width:650px}}
-    @media screen and (min-width: 1024px){#container{font-size:2.4rem;line-height:1.34;width:700px;font-weight:400}}
-  </style>
-</head>
-<body>
-  <div id=container>
-    <div id="years">years</div>
-    <div id="months">months</div>
-    <div id="weeks">weeks</div>
-    <div id="days" class="mark">days</div>
-    <div id="hours">hours</div>
-    <div id="minutes">minutes</div>
-    <div id="seconds">seconds</div>
-    <div id="title">since <span id="date"></span><br/>
-    <div id="information"><strong style="font-size:1.5em;line-height:1;">*</strong> <abbr title="🤔🤷">imprecise</abbr></div></div>
-  </div>
-  <script>
-    'use strict'
-
-    window.date.textContent = window.location.hash
-      ? window.location.hash.replace('#', '').replace(/-/g, '/')
-      : '1986/03/22'
-
-    class Dater {
-      constructor(ref) {
-        // since 0001/01/01
-        this._years   = ref.getFullYear() - 1
-        this._months  = this._years * 12 + ref.getMonth()
-        this._days    = this._years * 365 + this._months * 30 + ref.getDate() - 1
-        this._weeks   = Math.floor(this._days / 7)
-        this._hours   = this._days * 24 + ref.getHours()
-        this._minutes = this._hours * 60 + ref.getMinutes()
-        this._seconds = this._minutes * 60 + ref.getSeconds()
-      }
-      getYears   = (d = new Date()) => new Dater(d)._years   - this._years
-      getMonths  = (d = new Date()) => new Dater(d)._months  - this._months
-      getDays    = (d = new Date()) => new Dater(d)._days    - this._days
-      getWeeks   = (d = new Date()) => new Dater(d)._weeks   - this._weeks
-      getHours   = (d = new Date()) => new Dater(d)._hours   - this._hours
-      getMinutes = (d = new Date()) => new Dater(d)._minutes - this._minutes
-      getSeconds = (d = new Date()) => new Dater(d)._seconds - this._seconds
-    }
-
-    const dater = new Dater(new Date(window.date.textContent))
-
-    const write = () => {
-      window.years.textContent   = `${dater.getYears()} years`
-      window.months.textContent  = `${dater.getMonths()} months`
-      window.weeks.textContent   = `${dater.getWeeks()} weeks`
-      window.days.textContent    = `${dater.getDays()} days`
-      window.hours.textContent   = `${dater.getHours()} hours`
-      window.minutes.textContent = `${dater.getMinutes()} minutes`
-      window.seconds.textContent = `${dater.getSeconds()} seconds`
-    }
-
-    const update = () => {
-      setInterval(write, 1000)
-      requestAnimationFrame(update)
-    }
-
-    write()
-    update()
-
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age</title>
+    <link rel="stylesheet" href="age.css">
+  </head>
+  <body>
+    <div id=container>
+      <div id="years">years</div>
+      <div id="months">months</div>
+      <div id="weeks">weeks</div>
+      <div id="days" class="mark">days</div>
+      <div id="hours">hours</div>
+      <div id="minutes">minutes</div>
+      <div id="seconds">seconds</div>
+      <div id="title">since <span id="date"></span><br/>
+      <div id="information"><strong style="font-size:1.5em;line-height:1;">*</strong> <abbr title="🤔🤷">imprecise</abbr></div></div>
+    </div>
+    <script type="text/javascript" src="age.js"></script>
+  </body>
 </html>
