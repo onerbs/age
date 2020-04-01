@@ -1,0 +1,64 @@
+$DeviceWidth0: 240px
+$DeviceWidth1: 320px
+$DeviceWidth2: 360px
+$DeviceWidth3: 411px
+$DeviceWidth4: 600px
+$DeviceWidth5: 800px
+$DeviceWidth6: 1024px
+$DeviceWidth7: 1280px
+$DeviceWidth8: 1440px
+
+/// Nokia 8110 4G
+@media (max-width: $DeviceWidth0)
+  #container
+    font-size: 0.9em
+    letter-spacing: 1px
+
+/// iPhone 5/SE
+@media (min-width: $DeviceWidth1)
+  #container
+    font-size: 1.12em
+    line-height: 1.4
+
+/// Galaxy S5
+@media (min-width: $DeviceWidth2)
+  #container
+    font-size: 1.25em
+    letter-spacing: 1px
+    line-height: 1.58
+
+/// Pixel 2/2 XL
+@media (min-width: $DeviceWidth3)
+  #container
+    font-size: 1.4em
+    line-height: 1.58
+    font-weight: 300
+
+/// Nexus 7
+@media (min-width: $DeviceWidth4)
+  #container
+    font-size: 1.525em
+
+/// Lumia 950
+@media (min-width: $DeviceWidth5)
+  #container
+    font-size: 1.6em
+    line-height: 1.46
+    width: 600px
+
+/// iPad Pro 12.9-inch
+@media (min-width: $DeviceWidth6)
+  #container
+    font-weight: 400
+    line-height: 1.65
+    width: 650px
+
+/// MDPI
+@media (min-width: $DeviceWidth7)
+  #container
+    width: 700px
+
+/// HiDPI
+@media (min-width: $DeviceWidth8)
+  body
+    font-weight: 100
