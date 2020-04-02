@@ -1,9 +1,18 @@
 const { src, dest, series, parallel } = require('gulp')
-const stylc = require('gulp-stylus')
-const { createProject } = require('gulp-typescript')
+
+const pug    = require('gulp-pug')
+const stylc  = require('gulp-stylus')
+const tsc    = require('gulp-typescript')
+
+const clean  = require('gulp-clean')
+const concat = require('gulp-concat')
 const minify = require('gulp-minify')
-const clean = require('gulp-clean')
 const rename = require('gulp-rename')
+
+const pug_Build = () =>
+  src('src/index.pug')
+    .pipe(pug())
+    .pipe(dest('docs'))
 
 const styl_Build = () =>
   src('src/styl/age.styl')
@@ -20,20 +29,26 @@ const styl_Clean = () =>
     .pipe(clean())
 
 const ts_Build = () =>
-  src('age.ts')
-    .pipe(createProject('tsconfig.json')())
-    .pipe(dest('docs'))
+  src('src/ts/*.ts')
+    .pipe(tsc.createProject('tsconfig.json')())
+    .pipe(dest('dist'))
+
+const js_Concat = () =>
+  src('dist/*.js')
+    .pipe(concat('dist.js'))
+    .pipe(dest('dist'))
 
 const js_Minify = () =>
-  src('docs/age.js')
+  src('dist/dist.js')
     .pipe(minify({ ext: { min: '.min.js' } }))
-    .pipe(dest('docs', { overwrite: true }))
+    .pipe(dest('docs'))
 
 const js_Clean = () =>
-  src("docs/age.js", { read: false })
+  src(["dist", "docs/dist.js"], { read: false })
     .pipe(clean())
 
 exports.default = parallel(
+  series(pug_Build),
   series(styl_Build, styl_Rename, styl_Clean),
-  series(ts_Build, js_Minify, js_Clean)
+  series(ts_Build, js_Concat, js_Minify, js_Clean)
 )
