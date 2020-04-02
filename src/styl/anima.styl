@@ -1,11 +1,11 @@
 @keyframes fadeIn
   0%
-    opacity: 0
+    opacity 0
   100%
-    opacity: 1
+    opacity 1
 
-@mixin anima($delay)
-  animation: fadeIn 1.5s ease $delay both
+anima(delay)
+  animation fadeIn 1.5s ease delay both
 
 #years
   @include anima(0ms)
