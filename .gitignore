@@ -1,2 +1,4 @@
-node_modules
-docs
+node_modules/
+docs/
+yarn.lock
+package-lock.json
