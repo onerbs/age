@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "lib":   ["ESNext", "DOM"],
     "module": "ESNext",
-    "lib": ["ES6", "DOM"],
-    "target": "ES2018",
+    "target": "ESNext",
     "sourceMap": false,
-    "strict": true,
-    "strictNullChecks": true,
-    "outDir": "docs/"
+    "strict": true
   }
 }
