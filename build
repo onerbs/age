@@ -1,3 +1,0 @@
-npx sass --no-source-map src/sass/main.sass docs/age.css
-npx tsc --build
-npx standard --fix docs/age.js
