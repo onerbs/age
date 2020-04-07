@@ -10,7 +10,7 @@ const build__pug = () =>
     .pipe(pug())
     .pipe(dest('public'))
 
-const job_minify = () =>
+const js_minify = () =>
   src('public/age.js')
     .pipe(minifier({
       mangle: {
@@ -20,23 +20,23 @@ const job_minify = () =>
     }))
     .pipe(dest('public'))
 
-const job_suffix = () =>
+const js_suffix = () =>
   src(`public/age-min.js`)
     .pipe(renamer(`age.min.js`))
     .pipe(dest('public'))
 
-const job_clean = () =>
+const js_clean = () =>
   src([
       'public/age.js', 
       'public/age-min.js'
   ], { read: false })
     .pipe(cleaner())
 
-exports.default = series(
-  parallel(
-    build__pug,
-    job_minify,
-  ),
-  job_suffix,
-  job_clean
+exports.default = parallel(
+  build__pug,
+  series(
+    js_minify,
+    js_suffix,
+    js_clean
+  )  
 )

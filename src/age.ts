@@ -109,8 +109,8 @@ class UI {
     }
     let hash = window.location.hash.substr(1) || '2020-01-01'
     let [date, now] = [jsDateFromHash(hash), new Date()]
-    
-    info.textContent = `${date > now ? 'to' : 'since'} ${date.toLocaleDateString()}`
+
+    info.textContent = `${date > now ? 'to' : 'since'} ${date.toLocaleString()}`
     
     let ui = new UI(main)
         ui.fill(Seconds.fromDiff(now, date))
