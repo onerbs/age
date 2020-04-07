@@ -1,0 +1,4 @@
+#!/bin/sh
+yarn tsc --build && \
+yarn stylus --compress -o public/ --ext .min.css src/styl/age.styl && \
+yarn gulp

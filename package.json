@@ -1,20 +1,17 @@
 {
   "scripts": {
-    "start": "npx nodemon devserver.js",
-    "build": "npx gulp"
+    "start": "./build && yarn nodemon devserver.js"
   },
   "dependencies": {
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0",
     "gulp-pug": "^4.0.1",
     "gulp-rename": "^2.0.0",
-    "gulp-stylus": "^2.7.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "stylus": "^0.54.7",
+    "typescript": "^3.8.3"
   },
-  "license": "MIT",
   "private": true
 }
