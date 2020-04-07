@@ -1,29 +1,16 @@
+vendors = official
 @keyframes fadeIn
-  0%
-    opacity 0
-  100%
-    opacity 1
+	from
+		transform translateY(25px)
+		opacity 0
+	to
+		transform translateY(0)
+		opacity 1
 
-anima(delay)
-  animation fadeIn 1.5s ease delay both
+anim(delay)
+	animation fadeIn 1s ease unit(delay * 100, ms) both
 
-#years
-  @include anima(0ms)
-
-#months
-  @include anima(100ms)
-
-#weeks
-  @include anima(200ms)
-
-#days
-  @include anima(300ms)
-
-#hours
-  @include anima(400ms)
-
-#minutes
-  @include anima(500ms)
-
-#seconds
-  @include anima(600ms)
+main
+	for i in (1..7)
+		& div:nth-child(i)
+			anim(i - 1)
