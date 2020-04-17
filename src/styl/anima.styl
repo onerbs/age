@@ -1,16 +1,16 @@
 vendors = official
 @keyframes fadeIn
-	from
-		transform translateY(25px)
-		opacity 0
-	to
-		transform translateY(0)
-		opacity 1
+  from
+    transform translateY(25px)
+    opacity 0
+  to
+    transform translateY(0)
+    opacity 1
 
 anim(delay)
-	animation fadeIn 1s ease unit(delay * 100, ms) both
+  animation fadeIn 1s ease unit(delay * 100, ms) both
 
 main
-	for i in (1..7)
-		& div:nth-child(i)
-			anim(i - 1)
+  for i in (1..7)
+    & div:nth-child(i)
+      anim(i - 1)

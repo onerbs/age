@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "allowJs": false,
-        "module": "CommonJS",
-        "lib": ["ES6", "DOM"],
-        "target": "ES2018",
-        "strict": true,
-        "strictNullChecks": true,
-        "rootDir": "src",
-        "outDir": "public"
-    },
-    "exclude": [
-        "node_modules",
-        "public"
-    ]
+  "compilerOptions": {
+    "allowJs": false,
+    "module": "CommonJS",
+    "lib": ["ES6", "DOM"],
+    "target": "ES2018",
+    "strict": true,
+    "strictNullChecks": true,
+    "rootDir": "src",
+    "outDir": "public"
+  },
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
 }
