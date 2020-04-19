@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { diff, parse } from './age'
 import { Box, Flex } from 'theme-ui'
-
-const now = new Date()
-const jsDateFromHash = () => {
-  const hash = window.location.hash.substr(1) || '2020-01-01'
-  let yy: number, mm: number, dd: number, HH: number = 0, MM: number = 0, SS: number = 0,
-  [date, time] = hash.split('_');
-  [yy, mm, dd] = date.split('-').map(e => parseInt(e))
-  if (time !== undefined) [HH, MM, SS] = time.split(':').map(e => parseInt(e))
-  return new Date(yy, mm-1, dd, HH, MM || 0, SS || 0, 0)
-}
+import Picker from './components/Picker'
+import { Context } from './lib/context'
 
 const E = ({children, delay, small=false}: { children: any, delay: number, small?: boolean }) => {
   return (
@@ -21,7 +13,7 @@ const E = ({children, delay, small=false}: { children: any, delay: number, small
 }
 
 export default () => {
-  const date = jsDateFromHash()
+  const { now, date } = useContext(Context)
   const behind = date.getTime() > now.getTime()
   const valueStep = behind ? -1 : 1
 
@@ -54,9 +46,7 @@ export default () => {
         <E delay={delay += delayStep}>{parsed.hours} hours</E>
         <E delay={delay += delayStep}>{parsed.minutes} minutes</E>
         <E delay={delay += delayStep}>{parsed.seconds} seconds</E>
-        <E delay={delay += delayStep} small>
-          {`${behind ? 'to' : 'since'} ${date.toLocaleString()}`}
-        </E>
+        <Picker/>
       </Box>
     </Flex>
   )
