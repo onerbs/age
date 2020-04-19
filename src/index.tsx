@@ -2,6 +2,7 @@ import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { ThemeProvider } from 'theme-ui'
 import App from './App'
+import { LinguaProvider } from './lingua/context'
 
 render (
   <ThemeProvider theme={{
@@ -10,7 +11,9 @@ render (
     fontSizes: [ "2rem", "2.65rem", "3.35rem" ]
   }}>
     <StrictMode>
-      <App/>
+      <LinguaProvider>
+        <App/>
+      </LinguaProvider>
     </StrictMode>
   </ThemeProvider>
   ,
