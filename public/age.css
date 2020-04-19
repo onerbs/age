@@ -3,6 +3,13 @@
   line-height: 1.25;
 }
 
+input {
+    border: none !important;
+}
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 .animated {
   animation-name: fadeIn;
   animation-duration: 800ms;
