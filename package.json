@@ -1,17 +1,29 @@
 {
+  "private": true,
   "scripts": {
-    "start": "./build && yarn nodemon devserver.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "gulp": "^4.0.2",
-    "gulp-clean": "^0.4.0",
-    "gulp-minify": "^3.1.0",
-    "gulp-pug": "^4.0.1",
-    "gulp-rename": "^2.0.0",
-    "nodemon": "^2.0.2",
-    "stylus": "^0.54.7",
-    "typescript": "^3.8.3"
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/theme-ui": "^0.3.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "theme-ui": "^0.3.1",
+    "typescript": "~3.7.2"
   },
-  "private": true
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
