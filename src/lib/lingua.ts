@@ -20,6 +20,8 @@ const en: Lingua = {
     hour:   fn('hour'),
     minute: fn('minute'),
     second: fn('second'),
+    since: 'since',
+    to: 'to'
   },
   day: {
     name: [
@@ -55,6 +57,8 @@ const es: Lingua = {
     hour:   fn('hora'),
     minute: fn('minuto'),
     second: fn('segundo'),
+    since: 'desde',
+    to: 'para'
   },
   day: {
     name: [
@@ -90,6 +94,8 @@ const fr: Lingua = {
     hour:   fn('heure'),
     minute: fn('minute'),
     second: fn('seconde'),
+    since: 'depuis',
+    to: 'à'
   },
   day: {
     name: [
@@ -125,6 +131,8 @@ const lfn: Lingua = {
     hour:   fn('ora'),
     minute: fn('minuto'),
     second: fn('secondo'),
+    since: 'de',
+    to: 'a'
   },
   day: {
     name: [
@@ -158,13 +166,15 @@ type spec = {
 }
 export type Lingua = {
   age: {
-    year: (Q: number) => string
-    month: (Q: number) => string
-    week: (Q: number) => string
-    day: (Q: number) => string
-    hour: (Q: number) => string
+    year:   (Q: number) => string
+    month:  (Q: number) => string
+    week:   (Q: number) => string
+    day:    (Q: number) => string
+    hour:   (Q: number) => string
     minute: (Q: number) => string
     second: (Q: number) => string
+    since: string
+    to: string
   }
   day: spec
   month: spec
