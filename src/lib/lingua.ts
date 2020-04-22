@@ -8,7 +8,7 @@ export default (name?: string) => {
 }
 
 const fn = (singular: string, plural = 's') => {
-  return (cuantia: number) => `${singular}${cuantia !== 1 ? '' : plural}`
+  return (cuantia: number) => `${singular}${cuantia === 1 ? '' : plural}`
 }
 
 const en: Lingua = {
