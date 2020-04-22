@@ -14,6 +14,7 @@ export default () => {
       {linguas.map(lingua =>
         <Box mb={3} sx={{
           cursor: 'pointer',
+          fontFamily: 'text',
           opacity: 0.4,
           '&:hover': {
             opacity: 0.8

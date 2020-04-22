@@ -13,7 +13,7 @@ type context = {
 }
 
 const def: context = {
-  lang: lingua('es'),
+  lang: lingua(),
   date: new Date(new Date().getFullYear(), 0),
   behind: false,
   prep: "",
