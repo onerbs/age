@@ -1,0 +1,44 @@
+{
+  "breakpoints": ["360px", "480px", "800px", "1024px"],
+  "colors": {
+    "text": "#ddd",
+    "background": "#000",
+    "primary": "#9A67A5",
+    "secondary": "#FF6F91",
+    "shadow": "#000000E7"
+  },
+  "fonts": {
+    "body": "Inter, sans-serif"
+  },
+  "radii": {
+    "default": "3px",
+    "plus": "5px"
+  },
+  "fontWeights": {
+    "body": 400,
+    "bold": 700,
+    "heading": 900
+  },
+  "fontSizes": [
+    "0.5rem",
+    "1rem",
+    "1.5rem",
+    "2rem",
+    "2.5rem",
+    "3rem",
+    "3.5rem",
+    "4rem",
+    "4.5rem",
+    "5rem",
+    "5.5rem"
+  ],
+  "buttons": {
+    "primary": {
+      "backgroundColor": "transparent",
+      "color": "primary",
+      "cursor": "pointer",
+      "fontFamily": "body",
+      "letterSpacing": "2px"
+    }
+  }
+}
