@@ -75,12 +75,12 @@ const es: Lingua = {
       "Septiembre‎", "Octubre‎", "Noviembre‎", "Diciembre‎"
     ],
     abbr: [
-      "ene.", "feb.", "mzo.", "abr.", "may.", "jun.",
-      "jul.", "agt.", "sep.", "oct.", "nov.", "dic."
+      "ene.", "feb.", "mar.", "abr.", "may.", "jun.",
+      "jul.", "ago.", "sep.", "oct.", "nov.", "dic."
     ],
     symbol: [
-      "ENE", "FEB", "MZO", "ABR", "MAY", "JUN",
-      "JUL", "AGT", "SEP", "OCT", "NOV", "DIC"
+      "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+      "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
     ]
   }
 }
