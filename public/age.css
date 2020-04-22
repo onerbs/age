@@ -1,6 +1,9 @@
 *, *::before, *::after {
   box-sizing: border-box;
   line-height: 1.25;
+  outline: none;
+  overflow: hidden;
+  user-select: none;
 }
 
 input {
@@ -23,11 +26,11 @@ input[type=number]::-webkit-inner-spin-button {
 
 @keyframes fadeIn {
   from {
-    transform: translateY(30px);
+    transform: translate(5px, -5px);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate(0, 0);
     opacity: 1;
   }
 }
