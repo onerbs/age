@@ -4,6 +4,7 @@ import DatePicker from './components/DatePicker'
 import { Context } from './lib/context'
 
 import { parse } from './lib/age'
+import Linguas from './components/Linguas'
 
 const E = ({
   children,
@@ -33,7 +34,8 @@ export default () => {
   let delay = -delayStep
   const stepDelay = (): number => delay += delayStep
 
-  return (
+  return (<>
+    <Linguas/>
     <Flex sx={{
       fontFamily: 'body',
       alignItems: 'center',
@@ -62,5 +64,5 @@ export default () => {
       </Flex>
       <DatePicker/>
     </Flex>
-  )
+  </>)
 }

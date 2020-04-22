@@ -1,3 +1,10 @@
+export const linguas = [
+  { id: 'en', name: 'English' },
+  { id: 'es', name: 'Español' },
+  { id: 'fr', name: 'Français' },
+  { id: 'lfn', name: 'Elefen' },
+]
+
 export default (name?: string) => {
   switch (name) {
     default: return en
