@@ -1,8 +1,11 @@
 import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
+
 import { ThemeProvider } from 'theme-ui'
-import App from './App'
+import theme from './lib/theme.json'
+
 import { Provider } from './lib/context'
+import App from './App'
 
 render (
   <ThemeProvider theme={theme}>

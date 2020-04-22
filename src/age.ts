@@ -1,6 +1,6 @@
 const f = { year: 31556952, month: 2629746, week: 604800, day: 86400, hour: 3600, minute: 60, }
 
-export const diff = (A: Date, B: Date) => {
+export const compare = (A: Date, B: Date) => {
   const a: Date = A > B ? A : B
   const b: Date = A > B ? B : A; let
   R  = (a.getSeconds()  - b.getSeconds())
@@ -12,7 +12,7 @@ export const diff = (A: Date, B: Date) => {
   return R
 }
 
-export const parse = (time: number) => {
+export const parse = (time: number): diff => {
   let years   = Math.floor(time / f.year);   time -= years   * f.year
   let months  = Math.floor(time / f.month);  time -= months  * f.month
   let weeks   = Math.floor(time / f.week);   time -= weeks   * f.week
@@ -20,4 +20,14 @@ export const parse = (time: number) => {
   let hours   = Math.floor(time / f.hour);   time -= hours   * f.hour
   let minutes = Math.floor(time / f.minute); time -= minutes * f.minute
   return { years, months, weeks, days, hours, minutes, seconds: time }
+}
+
+export type diff = {
+  years: number
+  months: number
+  weeks: number
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
 }

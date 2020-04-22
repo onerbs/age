@@ -3,8 +3,8 @@
   "colors": {
     "text": "#ddd",
     "background": "#000",
-    "primary": "#9A67A5",
-    "secondary": "#FF6F91",
+    "primary": "#f7b42c",
+    "secondary": "#e82b7c",
     "shadow": "#000000E7"
   },
   "fonts": {
@@ -36,6 +36,14 @@
     "primary": {
       "backgroundColor": "transparent",
       "color": "primary",
+      "cursor": "pointer",
+      "fontFamily": "body",
+      "letterSpacing": "2px"
+    },
+    "secondary": {
+      "backgroundColor": "transparent",
+      "color": "secondary",
+      "fontWeight": "bold",
       "cursor": "pointer",
       "fontFamily": "body",
       "letterSpacing": "2px"
