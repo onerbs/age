@@ -1,10 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { diff, parse } from './age'
 import { Box, Flex } from 'theme-ui'
-import Picker from './components/Picker'
+import DatePicker from './components/DatePicker'
 import { Context } from './lib/context'
 
-const E = ({children, delay, small=false}: { children: any, delay: number, small?: boolean }) => {
+import { parse } from './age'
+
+const E = ({
+  children,
+  delay,
+  small=false
+}: {
+  children: any,
+  delay: number,
+  small?: boolean
+}) => {
   return (
     <Box className={`${small ? 'small ' : ''}animated`} sx={{
       animationDelay: `${delay}ms`
@@ -13,41 +22,45 @@ const E = ({children, delay, small=false}: { children: any, delay: number, small
 }
 
 export default () => {
-  const { now, date } = useContext(Context)
-  const behind = date.getTime() > now.getTime()
-  const valueStep = behind ? -1 : 1
-
-  const [value, setValue] = useState(diff(now, date))
-  const [parsed, setParser] = useState(parse(value))
+  const { lang, timeDiff } = useContext(Context)
+  const [diff, setDiff] = useState(parse(0))
 
   useEffect(() => {
-    let i = setInterval(() => {
-      setValue(value + valueStep)
-      setParser(parse(value))
-      console.log('event')
-    }, 1000)
-    return () => {
-      clearInterval(i)
-    }
-  })
+    setDiff(parse(timeDiff))
+  }, [timeDiff])
 
-  let delay = 0, delayStep = 120
+  let delayStep = 120
+  let delay = -delayStep
+  const stepDelay = (): number => delay += delayStep
+
   return (
     <Flex sx={{
+      fontFamily: 'body',
+      alignItems: 'center',
       backgroundImage: "linear-gradient(to right bottom, #111111, #0d0d0d, #090909, #050505, #000000)",
-      justifyContent: 'center', alignItems: 'center',
-      height: "100vh", fontSize: [0, 1, 2]
+      fontSize: [3, 4, 5, 6],
+      height: "100vh",
+      justifyContent: 'center',
+      flexDirection: 'column'
     }}>
-      <Box sx={{ width: ['auto', '300px', '420px', '600px', '800px'] }} >
-        <E delay={delay += delayStep}>{parsed.years} years</E>
-        <E delay={delay += delayStep}>{parsed.months} months</E>
-        <E delay={delay += delayStep}>{parsed.weeks} weeks</E>
-        <E delay={delay += delayStep}>{parsed.days} days</E>
-        <E delay={delay += delayStep}>{parsed.hours} hours</E>
-        <E delay={delay += delayStep}>{parsed.minutes} minutes</E>
-        <E delay={delay += delayStep}>{parsed.seconds} seconds</E>
-        <Picker/>
-      </Box>
+      <Flex sx={{
+        width: ['250px', '300px', '420px', '650px', '730px'],
+        flexDirection: ['column', 'column', 'column', 'row'],
+        justifyContent: ['flex-start', 'flex-start', 'flex-start', 'space-between']
+      }}>
+        <Box>
+          <E delay={stepDelay()}>{diff.years} {lang.age.year(diff.years)}</E>
+          <E delay={stepDelay()}>{diff.months} {lang.age.month(diff.months)}</E>
+          <E delay={stepDelay()}>{diff.weeks} {lang.age.week(diff.weeks)}</E>
+          <E delay={stepDelay()}>{diff.days} {lang.age.day(diff.days)}</E>
+        </Box>
+        <Box sx={{ textAlign: ['left', 'left', 'left', 'right'] }}>
+          <E delay={stepDelay()}>{diff.hours} {lang.age.hour(diff.hours)}</E>
+          <E delay={stepDelay()}>{diff.minutes} {lang.age.minute(diff.minutes)}</E>
+          <E delay={stepDelay()}>{diff.seconds} {lang.age.second(diff.seconds)}</E>
+        </Box>
+      </Flex>
+      <DatePicker/>
     </Flex>
   )
 }
