@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import lingua, { Lingua } from "./lingua"
-import { compare } from "../age"
+import { compare } from "./age"
 
 type context = {
   lang: Lingua

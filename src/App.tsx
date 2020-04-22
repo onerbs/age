@@ -3,7 +3,7 @@ import { Box, Flex } from 'theme-ui'
 import DatePicker from './components/DatePicker'
 import { Context } from './lib/context'
 
-import { parse } from './age'
+import { parse } from './lib/age'
 
 const E = ({
   children,
