@@ -116,9 +116,30 @@ const MonthSelector = ({action, close}: { action: (d: number) => void, close: ()
     </Shadow>
   )
 }
+
+class YearRange {
+  current: number
+  chunk: number[]
+  constructor(initial: number) {
+    this.current = parseInt(initial.toString().slice(0, 3)) * 10
+    this.chunk = seq(this.current + 9, this.current)
+  }
+  nextChunk(): number[] {
+    this.current += 10
+    this.chunk = seq(this.current + 9, this.current)
+    return this.chunk
+  }
+  prevChunk(): number[] {
+    this.current -= 10
+    this.chunk = seq(this.current + 9, this.current)
+    return this.chunk
+  }
+}
+
 const YearSelector = ({action, close}: { action: (d: number) => void, close: () => void }) => {
   const { date } = useContext(Context)
-  let from = parseInt(date.getFullYear().toString().slice(0, 3)) * 10
+  const range = useState(new YearRange(date.getFullYear()))[0]
+  const [chunk, setChunk] = useState(range.chunk)
   return (
     <Shadow close={close}>
       <Box color='text' p={3} sx={{ cursor: 'pointer' }}
