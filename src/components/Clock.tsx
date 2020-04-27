@@ -1,7 +1,7 @@
 import React, { useRef, useContext } from 'react'
 import { Context } from '../lib/context'
-import { Input } from 'theme-ui'
-import Modal from './Modal'
+import { Input, Flex } from 'theme-ui'
+import Shadow from './Shadow'
 
 export default ({close}: { close: () => void }) => {
 
@@ -17,23 +17,30 @@ export default ({close}: { close: () => void }) => {
     ))
   }
   return (
-    <Modal close={close} width={[125, 160]}>
-      <Input ref={hour} type='number' max={23} value={date.getHours()} p={0} mt={[3, 4]}
-        sx={{ fontFamily: 'body', fontSize: [7, 8], textAlign: 'center', fontWeight: 'heading' }}
-        onKeyPress={e => { if (e.key === 'Enter') close() }}
-        onChange={() => {
-          const value = `0${hour.current.value}`
-          setTime(parseInt(value), date.getMinutes())
-        }}
-        />
-      <Input ref={minu} type='number' max={59} value={date.getMinutes()} p={0} mb={[3, 4]}
-        sx={{ fontFamily: 'body', fontSize: [7, 8], textAlign: 'center' }}
-        onKeyPress={e => { if (e.key === 'Enter') close() }}
-        onChange={() => {
-          const value = `0${minu.current.value}`
-          setTime(date.getHours(), parseInt(value))
-        }}
-        />
-    </Modal>
+    <Shadow close={close}>
+      <Flex sx={{
+        backgroundColor: 'text',
+        color: 'background',
+        flexDirection: 'column',
+        width: [125, 160]
+      }}>
+        <Input ref={hour} type='number' max={23} value={date.getHours()} p={0} mt={[3, 4]}
+          sx={{ fontFamily: 'body', fontSize: [7, 8], textAlign: 'center', fontWeight: 'heading' }}
+          onKeyPress={e => { if (e.key === 'Enter') close() }}
+          onChange={() => {
+            const value = `0${hour.current.value}`
+            setTime(parseInt(value), date.getMinutes())
+          }}
+          />
+        <Input ref={minu} type='number' max={59} value={date.getMinutes()} p={0} mb={[3, 4]}
+          sx={{ fontFamily: 'body', fontSize: [7, 8], textAlign: 'center' }}
+          onKeyPress={e => { if (e.key === 'Enter') close() }}
+          onChange={() => {
+            const value = `0${minu.current.value}`
+            setTime(date.getHours(), parseInt(value))
+          }}
+          />
+      </Flex>
+    </Shadow>
   )
 }

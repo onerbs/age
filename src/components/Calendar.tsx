@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Context } from '../lib/context'
 import { Box, Button, Flex, Text } from 'theme-ui'
-import Modal from './Modal'
+import Shadow from './Shadow'
 
 const Cell = ({
   bold = false,
@@ -19,7 +19,7 @@ const Cell = ({
   select?: boolean
 }) => (
   <Box as='span' py={[2]} sx={{ color: select ? 'secondary' : 'inherit',
-    flexBasis: cols.map(c => `calc(100% / ${c})`),
+    width: cols.map(c => `calc(100% / ${c})`),
     textAlign: 'center',
     opacity: dim ? 0.8 : 1,
     fontWeight: select || bold ? 'bold' : 'inherit',
@@ -53,91 +53,98 @@ export default ({close}: { close: () => void }) => {
   }
 
   return (
-    <Modal close={close} width={[260, 320, 400, 500]}>
+    <Shadow close={close}>
+      <Flex sx={{
+        backgroundColor: 'text',
+        color: 'background',
+        flexDirection: 'column',
+        width: [260, 320, 400, 500]
+      }}>
 
-      <Flex my={2} sx={{ fontSize: [1, 2], justifyContent: 'space-around', width: '100%' }}>
-        <Button variant='secondary' onClick={() => { selectMonth(true) }}>{lang.month.symbol[date.getMonth()]}</Button>
-        <Button variant='secondary' onClick={() => { selectYear(true) }}>{date.getFullYear()}</Button>
+        <Flex my={2} sx={{ fontSize: [1, 2], justifyContent: 'space-around', width: '100%' }}>
+          <Button variant='secondary' onClick={() => { selectMonth(true) }}>{lang.month.symbol[date.getMonth()]}</Button>
+          <Button variant='secondary' onClick={() => { selectYear(true) }}>{date.getFullYear()}</Button>
+        </Flex>
+
+        <Flex sx={{ flexWrap: 'wrap' }}>
+          {lang.day.symbol.map(l =>
+            <Cell cols={[7]} key={`LangDaySymbol+${l}`} bold>{l}</Cell>
+          )}
+          {seq(31, 29).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
+          {seq(30).map(n =>
+            <Cell cols={[7]} key={`EnabledCell+${n}`}
+              onClick={() => { pickDate(n) }}
+              select={ n === date.getDate() }>{n}
+            </Cell>
+          )}
+          {seq(9).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
+        </Flex>
+
+        <Box py={2} px={[2, 3]} sx={{ width: '100%', textAlign: 'right' }}>
+          <Text as='span' color='secondary' onClick={close} sx={{ cursor: 'pointer' }}>
+            <svg width='1.25em' viewBox="0 0 24 24" fill='currentColor'>
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+          </Text>
+        </Box>
+
+        { sMonth && <MonthSelector action={pickMonth} close={() => { selectMonth(false) }}/> }
+        { sYear && <YearSelector action={pickYear} close={() => { selectYear(false) }}/> }
       </Flex>
-
-      <Flex sx={{ flexWrap: 'wrap' }}>
-        {lang.day.symbol.map(l =>
-          <Cell cols={[7]} key={`LangDaySymbol+${l}`} bold>{l}</Cell>
-        )}
-        {seq(31, 29).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
-        {seq(30).map(n =>
-          <Cell cols={[7]} key={`EnabledCell+${n}`}
-            onClick={() => { pickDate(n) }}
-            select={ n === date.getDate() }>{n}
-          </Cell>
-        )}
-        {seq(9).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
-      </Flex>
-
-      <Box py={2} px={[2, 3]} sx={{ width: '100%', textAlign: 'right' }}>
-        <Text as='span' color='secondary' onClick={close} sx={{ cursor: 'pointer' }}>
-          <svg width='1.25em' viewBox="0 0 24 24" fill='currentColor'>
-            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-          </svg>
-        </Text>
-      </Box>
-
-      { sMonth && <MonthSelector action={pickMonth} close={() => { selectMonth(false) }}/> }
-      { sYear && <YearSelector action={pickYear} close={() => { selectYear(false) }}/> }
-    </Modal>
+    </Shadow>
   )
 }
 
-const Selector = ({
-  action,
-  close,
-  data,
-  cols,
-  width,
-  match
-}: {
-  action: (e: number) => void
-  close: () => void
-  data: Array<string | number>
-  cols: number[]
-  width: number[]
-  match: number
-}) => {
-  return (
-    <Modal width={width} direction='initial' close={close}>
-      {
-        data.map((d, i) => (
-          <Cell key={`SelectorCell+${d}`} cols={cols}
-            onClick={() => action(typeof d === 'string' ? i : d)}
-            select={ i === match || d === match }>{d}
-          </Cell>
-        ))
-      }
-    </Modal>
-  )
-}
 const MonthSelector = ({action, close}: { action: (d: number) => void, close: () => void }) => {
   const { lang, date } = useContext(Context)
   return (
-    <Selector
-      action={action}
-      close={close}
-      cols={[3]}
-      data={lang.month.symbol}
-      match={date.getMonth()}
-      width={[200, 300]} />
+    <Shadow close={close}>
+      <Flex bg='text' color='background' sx={{
+         borderRadius: 'default',
+         flexWrap: 'wrap',
+         width: [200, 300]
+       }}>
+         {
+           lang.month.symbol.map((d, i) => (
+             <Cell key={`SelectorCell+${d}`} cols={[3]}
+               onClick={() => action(i)}
+               select={ i === date.getMonth() }>{d}
+             </Cell>
+           ))
+         }
+      </Flex>
+    </Shadow>
   )
 }
 const YearSelector = ({action, close}: { action: (d: number) => void, close: () => void }) => {
   const { date } = useContext(Context)
   let from = parseInt(date.getFullYear().toString().slice(0, 3)) * 10
   return (
-    <Selector
-      action={action}
-      close={close}
-      cols={[2]}
-      data={seq(from + 9, from)}
-      match={date.getFullYear()}
-      width={[120, 180]} />
+    <Shadow close={close}>
+      <Box color='text' p={3} sx={{ cursor: 'pointer' }}
+        onClick={() => { setChunk(range.prevChunk()) }}
+      >
+        &lt;-
+      </Box>
+      <Flex bg='text' color='background' sx={{
+         borderRadius: 'default',
+         flexWrap: 'wrap',
+         width: [120, 180]
+       }}>
+         {
+           chunk.map(d => (
+             <Cell key={`SelectorCell+${d}`} cols={[2]}
+               onClick={() => action(d)}
+               select={ d === date.getFullYear() }>{d}
+             </Cell>
+           ))
+         }
+      </Flex>
+      <Box color='text' p={3} sx={{ cursor: 'pointer' }}
+        onClick={() => { setChunk(range.nextChunk()) }}
+      >
+        -&gt;
+      </Box>
+    </Shadow>
   )
 }
