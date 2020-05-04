@@ -1,8 +1,17 @@
-const f = { year: 31556952, month: 2629746, week: 604800, day: 86400, hour: 3600, minute: 60, }
+const f = {
+  year: 31556952,
+  month: 2629746,
+  week: 604800,
+  day: 86400,
+  hour: 3600,
+  minute: 60,
+}
 
-export const compare = (A: Date, B: Date): number => Math.floor(Math.abs((A.getTime() - B.getTime()) / 1000))
+export function compare(A: Date, B: Date): number {
+  return Math.floor(Math.abs((A.getTime() - B.getTime()) / 1000))
+}
 
-export const parse = (time: number): diff => {
+export function parse(time: number): diff {
   let years   = Math.floor(time / f.year);   time -= years   * f.year
   let months  = Math.floor(time / f.month);  time -= months  * f.month
   let weeks   = Math.floor(time / f.week);   time -= weeks   * f.week

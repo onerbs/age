@@ -3,7 +3,7 @@ import { Context } from '../lib/context'
 import { Box, Button, Flex, Text } from 'theme-ui'
 import Shadow from './Shadow'
 
-const Cell = ({
+function Cell({
   bold = false,
   children,
   cols,
@@ -15,41 +15,44 @@ const Cell = ({
   children: any
   cols: number[]
   dim?:boolean
-  onClick?: () => void
+  onClick?(): void
   select?: boolean
-}) => (
-  <Box as='span' py={[2]} sx={{ color: select ? 'secondary' : 'inherit',
-    width: cols.map(c => `calc(100% / ${c})`),
-    textAlign: 'center',
-    opacity: dim ? 0.8 : 1,
-    fontWeight: select || bold ? 'bold' : 'inherit',
-  }} onClick={onClick} children={children}/>
-)
-
-const seq = (O: number, A = 1) => {
-  let seq = []; for (let i = A; i <= O; i++) seq.push(i)
-  return seq
+}) {
+  return (
+    <Box as="span" py={[2]} sx={{
+      color: select ? 'secondary' : 'inherit',
+      fontWeight: select || bold ? 'bold' : 'inherit',
+      opacity: dim ? 0.8 : 1,
+      textAlign: 'center',
+      width: cols.map(c => `calc(100% / ${c})`),
+    }} onClick={onClick} children={children}/>
+  )
 }
 
-export default ({close}: { close: () => void }) => {
-  const { lang, date, setDate } = useContext(Context)
+function range(end: number, begin = 1) {
+  let range: number[] = []
+  for (let i = begin; i <= end; i++) {
+    range.push(i)
+  }
+  return range
+}
+
+export default function Calendar({close}: {close(): void}) {
+  const {lang, date, setDate} = useContext(Context)
   const [sMonth, selectMonth] = useState(false)
   const [sYear, selectYear] = useState(false)
 
-  const _pick = (y: number, m: number, d: number) => {
-    setDate(new Date(
-      y, m, d, date.getHours(),
-      date.getMinutes(), 0, 0
-    ))
+  function pick(y: number, m: number, d: number) {
+    setDate(new Date(y, m, d, date.getHours(), date.getMinutes(), 0, 0))
   }
-  const pickYear = (year: number) => {
-    _pick(year, date.getMonth(), date.getDate())
+  function pickYear(year: number) {
+    pick(year, date.getMonth(), date.getDate())
   }
-  const pickMonth = (month: number) => {
-    _pick(date.getFullYear(), month, date.getDate())
+  function pickMonth(month: number) {
+    pick(date.getFullYear(), month, date.getDate())
   }
-  const pickDate = (day: number) => {
-    _pick(date.getFullYear(), date.getMonth(), day)
+  function pickDate(day: number) {
+    pick(date.getFullYear(), date.getMonth(), day)
   }
 
   return (
@@ -61,23 +64,25 @@ export default ({close}: { close: () => void }) => {
         width: [260, 320, 400, 500]
       }}>
 
-        <Flex my={2} sx={{ fontSize: [1, 2], justifyContent: 'space-around', width: '100%' }}>
+        <Flex my={2} sx={{fontSize: [1, 2], justifyContent: 'space-around', width: '100%'}}>
           <Button variant='secondary' onClick={() => { selectMonth(true) }}>{lang.month.symbol[date.getMonth()]}</Button>
           <Button variant='secondary' onClick={() => { selectYear(true) }}>{date.getFullYear()}</Button>
         </Flex>
 
-        <Flex sx={{ flexWrap: 'wrap' }}>
+        {/* todo: fix number distribution */}
+        {/* todo: add month navigation from here */}
+        <Flex sx={{flexWrap: 'wrap'}}>
           {lang.day.symbol.map(l =>
-            <Cell cols={[7]} key={`LangDaySymbol+${l}`} bold>{l}</Cell>
+            <Cell cols={[7]} key={`ds+${l}`} bold>{l}</Cell>
           )}
-          {seq(31, 29).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
-          {seq(30).map(n =>
-            <Cell cols={[7]} key={`EnabledCell+${n}`}
+          {range(31, 29).map(n => <Cell cols={[7]} key={`d+${n}`} dim>{n}</Cell>)}
+          {range(30).map(n =>
+            <Cell cols={[7]} key={`e+${n}`}
               onClick={() => { pickDate(n) }}
               select={ n === date.getDate() }>{n}
             </Cell>
           )}
-          {seq(9).map(n => <Cell cols={[7]} key={`DisabledCell+${n}`} dim>{n}</Cell>)}
+          {range(9).map(n => <Cell cols={[7]} key={`d+${n}`} dim>{n}</Cell>)}
         </Flex>
 
         <Box py={2} px={[2, 3]} sx={{ width: '100%', textAlign: 'right' }}>
@@ -95,7 +100,7 @@ export default ({close}: { close: () => void }) => {
   )
 }
 
-const MonthSelector = ({action, close}: { action: (d: number) => void, close: () => void }) => {
+function MonthSelector({action, close}: { action(d: number): void, close(): void }) {
   const { lang, date } = useContext(Context)
   return (
     <Shadow close={close}>
@@ -106,7 +111,7 @@ const MonthSelector = ({action, close}: { action: (d: number) => void, close: ()
        }}>
          {
            lang.month.symbol.map((d, i) => (
-             <Cell key={`SelectorCell+${d}`} cols={[3]}
+             <Cell key={`s+${d}`} cols={[3]}
                onClick={() => action(i)}
                select={ i === date.getMonth() }>{d}
              </Cell>
@@ -122,16 +127,16 @@ class YearRange {
   chunk: number[]
   constructor(initial: number) {
     this.current = parseInt(initial.toString().slice(0, 3)) * 10
-    this.chunk = seq(this.current + 9, this.current)
+    this.chunk = range(this.current + 9, this.current)
   }
   nextChunk(): number[] {
     this.current += 10
-    this.chunk = seq(this.current + 9, this.current)
+    this.chunk = range(this.current + 9, this.current)
     return this.chunk
   }
   prevChunk(): number[] {
     this.current -= 10
-    this.chunk = seq(this.current + 9, this.current)
+    this.chunk = range(this.current + 9, this.current)
     return this.chunk
   }
 }
@@ -154,7 +159,7 @@ const YearSelector = ({action, close}: { action: (d: number) => void, close: () 
        }}>
          {
            chunk.map(d => (
-             <Cell key={`SelectorCell+${d}`} cols={[2]}
+             <Cell key={`s+${d}`} cols={[2]}
                onClick={() => action(d)}
                select={ d === date.getFullYear() }>{d}
              </Cell>
