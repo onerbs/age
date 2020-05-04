@@ -47,9 +47,10 @@ export default function Calendar({close}: {close(): void}) {
   const [current, setCurrent] = useState(0)
   function populate() {
     const [year, month] = [date.getFullYear(), date.getMonth()]
+    let day = new Date(year, month, 1).getDay()
     let c = new Date(year, month + 1, 0).getDate()
     let p1 = new Date(year, month, 0).getDate()
-    let p2 = p1 - date.getDay() + 1
+    let p2 = p1 - day + 1
     let p3 = board - (c + (p1 - p2 + 1))
     setPrev([p1, p2, p3])
     setCurrent(c)
